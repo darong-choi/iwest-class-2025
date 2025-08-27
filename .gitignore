@@ -1,0 +1,7 @@
+# .gitignore 파일
+#  - git을 통해 무시할 파일명 패턴을 자유롭게 추가
+.env*
+__pycache__
+.DS_Store
+*.sqlite3
+.vscode
