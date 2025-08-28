@@ -1,5 +1,26 @@
 import os
 import requests
+from openai import OpenAI
+from openai.types.shared.chat_model import ChatModel
+
+def make_response(
+        user_content: str,
+        system_content: str | None = None,
+        temperature: float = 0.25,
+        model: str  | ChatModel = "gpt-4o-mini",
+        api_key: str | None = None,
+ ) -> str:
+    messages = []
+    if system_content:  #빈 문자열도 아니고, None도 아닐때
+        messages.append({"role": "system", "content": system_content})
+    messages.append({"role": "user", "content": user_content})
+    client = OpenAI(api_key)
+    response =  client.chat.completions.create(
+        model= model,
+        messages=messages,
+        temperature=0.2,
+    )
+    return response.choices[0].message.content
 
 def download_file(
         file_url: str, 
