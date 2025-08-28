@@ -19,3 +19,7 @@ jupyter
 #pdf library
 pypdf2
 pdfplumber
+camelot-py[base] 
+pandas 
+tabulate
+pyhwp
