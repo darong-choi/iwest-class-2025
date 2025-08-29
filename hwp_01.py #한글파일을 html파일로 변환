@@ -1,5 +1,7 @@
 import os
 import subprocess
+from utils import hwp_to_html
+
 
 def find_업무분장_hwp_files(base_path:str)-> list[str]:
     
@@ -17,28 +19,30 @@ def find_업무분장_hwp_files(base_path:str)-> list[str]:
                 hwp_files.append(filepath)
     return hwp_files
 
-def run_convert_cmd(hwp_path:str):
-    output_path = os.path.splitext(hwp_path)[0] + ".html"
-    cmd = [
-        "hwp5html", 
-        "--html", 
-        "--output", 
-        output_path, 
-        hwp_path,
-    ]
-    result = subprocess.run(cmd, capture_output=True, text=True)
-    #대개의 경우, 인자 구성이 잘못되었을 때 에러가 발생할 겁니다.
-    if result.returncode !=0: #프로그램의 종료 코드 
-        raise RuntimeError(f"변환 오류: {result.stderr}")
+# def run_convert_cmd(hwp_path:str):
+#     output_path = os.path.splitext(hwp_path)[0] + ".html"
+#     cmd = [
+#         "hwp5html", 
+#         "--html", 
+#         "--output", 
+#         output_path, 
+#         hwp_path,
+#     ]
+#     result = subprocess.run(cmd, capture_output=True, text=True)
+#     #대개의 경우, 인자 구성이 잘못되었을 때 에러가 발생할 겁니다.
+#     if result.returncode !=0: #프로그램의 종료 코드 
+#         raise RuntimeError(f"변환 오류: {result.stderr}")
 
-    return output_path
+#     return output_path
 
 
 def main():
     hwp_files = find_업무분장_hwp_files("C:/work/iwest-class-2025/PDFs")
     for hwp_path in hwp_files:
-        html_path = run_convert_cmd(hwp_path)
-        print("created", html_path)
+        # html_path = run_convert_cmd(hwp_path)
+        html_str = hwp_to_html(hwp_path=hwp_path)
+        print("created html")
+        print(html_str)
 
 main()
 
